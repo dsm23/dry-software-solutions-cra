@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import clamp from 'lodash-es/clamp';
 import { useSprings, animated } from 'react-spring';
 import { useGesture } from 'react-use-gesture';
+import { Container, Grid, Paper, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import './App.css';
 
@@ -13,7 +15,21 @@ import photoPage5 from './assets/photoPage5.jpeg';
 
 const pages = [photoPage1, photoPage2, photoPage3, photoPage4, photoPage5];
 
+const useStyles = makeStyles(theme => ({
+  container: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    padding: theme.spacing(3, 2),
+  },
+}));
+
 const App = () => {
+  const classes = useStyles();
+
   const index = useRef(0);
   const [props, set] = useSprings(pages.length, i => ({
     x: i * window.innerWidth,
@@ -61,8 +77,17 @@ const App = () => {
           transform: sc.interpolate(s => `scale(${s})`),
           backgroundImage: `url(${pages[i]})`,
         }}
-      />
-      hello world
+      >
+        <Container className={classes.container} maxWidth="sm">
+          <Grid item spacing={0}>
+            <Paper className={classes.paper} elevation={24}>
+              <Typography variant="h4" component="h4">
+                Dry Software Solutions Ltd.
+              </Typography>
+            </Paper>
+          </Grid>
+        </Container>
+      </animated.div>
     </animated.div>
   ));
 };
